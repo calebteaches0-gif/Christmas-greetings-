@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Merry Christmas 🎄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0b6623, #1e3d2f);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .box {
+    background: rgba(0,0,0,0.45);
+    padding: 30px;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 420px;
+    z-index: 2;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    margin-top: 15px;
+    font-size: 16px;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: red;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* Christmas text animation */
+  .christmas-text {
+    font-size: 32px;
+    margin-top: 20px;
+    animation: glow 2s infinite alternate, bounce 2s infinite;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 5px #fff; }
+    to { text-shadow: 0 0 20px gold; }
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .share {
+    margin-top: 20px;
+  }
+
+  .share button {
+    background: white;
+    color: black;
+    margin-top: 8px;
+  }
+
+  /* Snow */
+  .snow {
+    position: fixed;
+    top: -10px;
+    color: white;
+    animation: fall linear infinite;
+    user-select: none;
+    z-index: 1;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh); }
+  }
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h2>🎄 Christmas Magic 🎄</h2>
+  <p>Type your name</p>
+
+  <input id="nameInput" placeholder="Your name">
+  <button onclick="showMessage()">See Magic ✨</button>
+
+  <div id="output"></div>
+
+  <div class="share" id="shareBox" style="display:none;">
+    <button onclick="shareWhatsApp()">Share on WhatsApp</button>
+    <button onclick="shareFacebook()">Share on Facebook</button>
+    <button onclick="openInstagram()">Share on Instagram</button>
+    <button onclick="copyLink()">Copy Link</button>
+  </div>
+</div>
+
+<script>
+/* Infinite snow */
+setInterval(createSnow, 300);
+
+function createSnow() {
+  let snow = document.createElement("div");
+  snow.className = "snow";
+  snow.innerHTML = "❄";
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.animationDuration = (Math.random() * 3 + 3) + "s";
+  snow.style.fontSize = (Math.random() * 12 + 10) + "px";
+  document.body.appendChild(snow);
+  setTimeout(() => snow.remove(), 7000);
+}
+
+/* Show message */
+function showMessage(nameFromUrl = null) {
+  const name = nameFromUrl || document.getElementById("nameInput").value.trim();
+  if (!name) return;
+
+  document.getElementById("output").innerHTML = `
+    <div class="christmas-text">🎄 Merry Christmas 🎄</div>
+    <h2>${name}</h2>
+  `;
+
+  const newUrl = window.location.origin + window.location.pathname + "?name=" + encodeURIComponent(name);
+  window.history.replaceState(null, "", newUrl);
+
+  document.getElementById("shareBox").style.display = "block";
+}
+
+/* Auto-load from URL */
+const params = new URLSearchParams(window.location.search);
+if (params.get("name")) {
+  showMessage(params.get("name"));
+}
+
+/* Share functions */
+function shareWhatsApp() {
+  const text = "🎄 Merry Christmas! Try this magic greeting 👇";
+  window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + location.href)}`);
+}
+
+function shareFacebook() {
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`);
+}
+
+function openInstagram() {
+  window.open("https://www.instagram.com/");
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(location.href);
+  alert("Link copied 🎉");
+}
+</script>
+
+</body>
+</html>
