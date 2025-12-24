@@ -92,7 +92,10 @@
 </style>
 </head>
 <body>
-
+<!-- Banner Ad -->
+<div style="text-align:center; margin:20px;">
+<script src="https://3nbf4.com/act/files/banner.js"></script>
+</div>
 <div class="box">
   <h2>🎄 Christmas Magic 🎄</h2>
   <p>Type your name</p>
@@ -165,6 +168,14 @@ function copyLink() {
   navigator.clipboard.writeText(location.href);
   alert("Link copied 🎉");
 }
+
+// Ad Network Script
+self.options = {
+    "domain": "3nbf4.com",
+    "zoneId": 10371901
+};
+self.lary = "";
+importScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw');
 </script>
 
 </body>
